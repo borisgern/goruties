@@ -100,14 +100,12 @@ func TestSigner(t *testing.T) {
 		return dataHash
 	}
 
-	//inputData := []int{0, 1, 1, 2, 3, 5, 8}
-	inputData := []int{0, 1}
+	inputData := []int{0, 1, 1, 2, 3, 5, 8}
+	//inputData := []int{0, 1}
 
 	hashSignJobs := []job{
 		job(func(in, out chan interface{}) {
-			fmt.Printf("in fib \n")
 			for _, fibNum := range inputData {
-				fmt.Printf("fibnum %v\n", fibNum)
 				out <- fibNum
 			}
 		}),
@@ -116,7 +114,6 @@ func TestSigner(t *testing.T) {
 		job(CombineResults),
 		job(func(in, out chan interface{}) {
 			dataRaw := <-in
-			fmt.Printf("in last data %v \n", dataRaw)
 			data, ok := dataRaw.(string)
 			if !ok {
 				t.Error("cant convert result data to string")
